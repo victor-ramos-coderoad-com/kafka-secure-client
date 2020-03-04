@@ -16,3 +16,29 @@ dependencies {
 
     compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.4.0'
 }
+
+jar {
+    baseName = 'kafka-secure-example'
+    version =  '0.1.0'
+}
+
+ext {
+    producerMainClass = "com.mojix.examples.SecureProducer"
+    consumerMainClass = "com.mojix.examples.SecureConsumer"
+}
+
+task runProducer(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the Producer Example"
+    standardInput = System.in
+    commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), producerMainClass
+}
+
+task runConsumer(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the Consumer Example"
+    standardInput = System.in
+    commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), consumerMainClass
+}
