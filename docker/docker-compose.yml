@@ -49,3 +49,23 @@ services:
     - ./ksecure//kafka_jaas.conf:/etc/kafka/kafka_jaas.conf:ro
     ports:
     - 9192:9192
+
+  client:
+    image: kafka-secure-client
+    depends_on:
+    - ksecure
+    environment:
+    - KAFKA_SERVERS=10.100.0.111:9192
+    - KAFKA_TOPIC=test_topic
+    - KAFKA_CONSUMER_GROUP=KafkaSecureClient
+    - SASL_JAAS_USER=farfetch
+    - SASL_JAAS_PASSWORD=farfetch-secret
+    - SSL_TRUSTSTORE_LOCATION=./build/kafka.truststore.jks
+    - SSL_TRUSTSTORE_PASSWORD=Control123!
+    - SSL_KEYSTORE_LOCATION=./build/kafka.keystore.jks
+    - SSL_KEYSTORE_PASSWORD=Control123!
+    - SSL_KEY_PASSWORD=Control123!
+    - SASL_ENABLED_MECHANISMS=PLAIN
+    volumes:
+    - ./ksecure/kafka.truststore.jks:/home/gradle/build/kafka.truststore.jks:ro
+    - ./ksecure/kafka.keystore.jks:/home/gradle/build/kafka.keystore.jks:ro

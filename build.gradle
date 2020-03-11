@@ -28,7 +28,6 @@ ext {
 }
 
 task runProducer(type: Exec) {
-    dependsOn build
     group = "Execution"
     description = "Run the Producer Example"
     standardInput = System.in
@@ -36,7 +35,6 @@ task runProducer(type: Exec) {
 }
 
 task runConsumer(type: Exec) {
-    dependsOn build
     group = "Execution"
     description = "Run the Consumer Example"
     standardInput = System.in
